@@ -1,0 +1,41 @@
+Daily Laravel Course
+
+22/10/25
+    - Câu lệnh chạy dự án: 
+        -> php artisan serve
+
+    - Câu lệnh tạo controller
+        -> php artisan make:controller ExampleController
+
+23/10/25
+    - @yeild('content') php2 - {{ $slot }} (bắt buộc phải là slot)
+    - <x-name-MainLayout> 'Content' </x-name-MainLayout> => không cần phải extends như php2
+
+29/10/25
+    - trong cmd chạy lệnh: mysql -u root -p => để kết nối database
+    - lệnh: show databases; => để xem các database có trong server
+    - exit enter để thoát.
+    - lệnh để chạy kết nối database: php artisan migrate
+    - lệnh: php artisan migrate:fresh -> sẽ xóa toàn bộ dữ liệu trong database và các bảng không có file nằm trong base Laravel 
+    - lệnh: php artisan make:migration nameTable lệnh này sẽ tạo thêm file định nghĩa cấu trúc bảng trong database
+    - file migration 
+        + mục đích: quản lý thay đổi cấu trúc CSDL (tạo, sửa, xóa bảng/cột)
+        + có thể tạo nhiều bảng nhưng nên chỉ 1/file 
+        + chạy lệnh PHP ARTISAN MIGRATE để thực thi up() và tạo bảng
+
+30/10/25
+    - CSRF | Cross-Site Request Forgery | "Giả mạo yêu cầu từ trang khác".
+        + Là một kiểu tấn công mà hacker lừa người dùng gửi yêu cầu đến trang web thật mà người đó đã đăng nhập
+        + sau khi render, Blade sẽ biến @csrf thành :
+            <input type="hidden" name="_token" value="r4nd0mStr1ng123...">
+        + Laravel tự động thêm một mã token bí mật (gọi là CSRF token) vào mọi form HTML.
+    
+    - Khi bạn submit form, Laravel sẽ:
+
+        + Lấy _token từ form gửi lên,
+
+        + So sánh với token thật đang lưu trong session của người dùng,
+
+        + Nếu trùng → hợp lệ ✅
+
+        + Nếu thiếu hoặc sai → lỗi ❌

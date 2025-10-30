@@ -38,4 +38,4 @@ Daily Laravel Course
 
         + Nếu trùng → hợp lệ ✅
 
-        + Nếu thiếu hoặc sai → lỗi ❌
+        + Nếu thiếu hoặc sai → lỗi ❌.

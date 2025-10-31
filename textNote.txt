@@ -13,11 +13,17 @@ Daily Laravel Course
 
 29/10/25
     - trong cmd chạy lệnh: mysql -u root -p => để kết nối database
+
     - lệnh: show databases; => để xem các database có trong server
+
     - exit enter để thoát.
+
     - lệnh để chạy kết nối database: php artisan migrate
+
     - lệnh: php artisan migrate:fresh -> sẽ xóa toàn bộ dữ liệu trong database và các bảng không có file nằm trong base Laravel 
+    
     - lệnh: php artisan make:migration nameTable lệnh này sẽ tạo thêm file định nghĩa cấu trúc bảng trong database
+    
     - file migration 
         + mục đích: quản lý thay đổi cấu trúc CSDL (tạo, sửa, xóa bảng/cột)
         + có thể tạo nhiều bảng nhưng nên chỉ 1/file 
@@ -26,8 +32,10 @@ Daily Laravel Course
 30/10/25
     - CSRF | Cross-Site Request Forgery | "Giả mạo yêu cầu từ trang khác".
         + Là một kiểu tấn công mà hacker lừa người dùng gửi yêu cầu đến trang web thật mà người đó đã đăng nhập
+        
         + sau khi render, Blade sẽ biến @csrf thành :
             <input type="hidden" name="_token" value="r4nd0mStr1ng123...">
+        
         + Laravel tự động thêm một mã token bí mật (gọi là CSRF token) vào mọi form HTML.
     
     - Khi bạn submit form, Laravel sẽ:
@@ -39,3 +47,14 @@ Daily Laravel Course
         + Nếu trùng → hợp lệ ✅
 
         + Nếu thiếu hoặc sai → lỗi ❌.
+    
+    - Trong form, phần confirm password => đặt name là password_confirmation, để laravel tự động tìm kiếm khi dùng hàm validate.
+    
+    - Truyền message vào view
+        @error('input_name')
+            <p class="m-0 small alert alert-danger shadow-sm">{{ $message }}</p>
+        @enderror
+    - Giữ các value hợp lệ: value="old('name_input')"
+31/10/25
+    - auth()->attempt(); thử đăng nhập user(username + password) trả về true/false 
+    - $request->session()->regenerate(); tạo session ID mới để chống hack, vô hiệu hóa session Id cũ

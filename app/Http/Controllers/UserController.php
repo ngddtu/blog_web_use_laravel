@@ -38,7 +38,7 @@ class UserController extends Controller
         // die();
         if(auth()->attempt(['username' => $data['loginusername'], 'password' => $data['loginpassword']])){
             $request->session()->regenerate();
-            return redirect('/')->with('success','You are now logged in.');
+            return redirect('/')->with('success','You are now logged in.');  //-------------xem ghi chú ngày 1/11----------
         } else {
             return redirect('/')->with('error','Invalid login.');
         }

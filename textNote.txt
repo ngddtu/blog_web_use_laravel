@@ -54,7 +54,45 @@ Daily Laravel Course
         @error('input_name')
             <p class="m-0 small alert alert-danger shadow-sm">{{ $message }}</p>
         @enderror
-    - Giữ các value hợp lệ: value="old('name_input')"
+    - Giữ các value hợp lệ: value="old('name_input')".
+
 31/10/25
     - auth()->attempt(); thử đăng nhập user(username + password) trả về true/false 
     - $request->session()->regenerate(); tạo session ID mới để chống hack, vô hiệu hóa session Id cũ
+    - $table->foreignId('user_id')->constrained(); constrained: chỉ tạo bài viết ứng với người dùng có userId tồn tại 
+        trong bảng users.
+    - $table->foreignId('users_id')->constrained()->onDelete('cascade'); 
+        + onDelete: nếu bản ghi trong users bị xóa thì toàn bộ bản ghi con trong bảng posts 
+            cũng bị xóa theo.
+    - strip_tags: chức năng chính: Xóa tất cả các thẻ HTML và PHP khỏi một chuỗi văn bản.
+    - $table->foreignId('user_id')->constrained()->onDelete('cascade'); constrained sẽ nhận tham số
+        là tên bảng, nếu không truyền nó sẽ tự động thêm s vào cuối user loại bỏ _id.
+
+1/11/25
+    - laravel tự nối model với bảng bằng quy ước tên 
+        + Tên model (số ít, PascalCase) → tên bảng (số nhiều, snake_case).
+        + nếu bảng tên guest mà muốn kết nối đến bảng client thì phải dùng: 
+            => protected $table = 'clinet';
+
+    - dòng này: return redirect('/')->with('success','You are now logged in.');
+        sẽ bắt key như thế này: 
+                    @if (session()->has('success'))
+                    <div class="container container--narrow">
+                        <div class="alert alert-success text-center">
+                            {{ session('success') }}
+                        </div>
+                    </div>
+                    @endif
+
+2/11/25
+    - public function getUserName(){
+        return $this->belongsTo(User::class, 'user_id'); 
+    } 
+        + tham chiếu từ bảng posts -> users, lấy ra các thuộc tính của user_id tương ứng
+        + $id->getUserName->username
+    - $id['body'] = Str::markdown($id->body); 
+        => chuyển đổi văn bản markdown thành html, ví dụ: # Tiêu để => <h1>Tiêu để</h1>
+        - để hiện thị trong view {!! $title !!}
+    - khai báo một middleware mới
+        1. php artisan make:middleware nameMiddleware.
+        2. bootsrap -> app.php -> khai báo middleware mới

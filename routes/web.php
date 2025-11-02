@@ -20,8 +20,9 @@ Route::post('/logout', [UserController::class, "logout"])->middleware('mustBeLog
 
 // Blog post related routes
 Route::get('/create-post', [PostController::class, "showCreatePostForm"])->middleware('mustBeLogged');
-Route::get('/post/{id}', [PostController::class, "viewSinglePost"])->middleware('mustBeLogged');
+Route::get('/post/{idPost}', [PostController::class, "viewSinglePost"])->middleware('mustBeLogged');
 Route::post('/create-post', [PostController::class, "storeNewPost"])->middleware('mustBeLogged');
+Route::delete('post/{idPost}', [PostController::class, "delete"]);
 
 //Profile user
 Route::get('/profile/{idUser}', [UserController::class, "profile"]);

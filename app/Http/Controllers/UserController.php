@@ -61,8 +61,8 @@ class UserController extends Controller
         $user = $idUser->get();
         // return $user;
         // echo '<pre>';
-        return $idUser;
-        die();
+        // return $idUser;
+        // die();
         return view('client.profile-posts', compact('thePosts', 'postCount', 'username'));
     }
 }

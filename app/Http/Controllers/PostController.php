@@ -32,9 +32,19 @@ class PostController extends Controller
     }
 
     //show blog mới đăng
-    public function viewSinglePost(Post $id){
+    public function viewSinglePost(Post $idPost){
         // return $id->title;
-        $id['body'] = Str::markdown($id->body);
-        return view('client.single-post', ['id' => $id]);
+        $idPost['body'] = Str::markdown($idPost->body);
+        return view('client.single-post', ['idPost' => $idPost]);
+    }
+
+    //xóa bài viết
+    public function delete(Post $idPost)  {
+        if(auth()->user()->cannot('delete', $idPost)){
+            return 'You cannot do that';
+        }
+        $idPost->delete();
+        return redirect('/profile/' . auth()->user()->id)->with('success', 'Post successfully deleted.');
+        
     }
 }

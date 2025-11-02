@@ -58,13 +58,18 @@ Daily Laravel Course
 
 31/10/25
     - auth()->attempt(); thử đăng nhập user(username + password) trả về true/false 
+    
     - $request->session()->regenerate(); tạo session ID mới để chống hack, vô hiệu hóa session Id cũ
+    
     - $table->foreignId('user_id')->constrained(); constrained: chỉ tạo bài viết ứng với người dùng có userId tồn tại 
         trong bảng users.
+    
     - $table->foreignId('users_id')->constrained()->onDelete('cascade'); 
         + onDelete: nếu bản ghi trong users bị xóa thì toàn bộ bản ghi con trong bảng posts 
             cũng bị xóa theo.
+    
     - strip_tags: chức năng chính: Xóa tất cả các thẻ HTML và PHP khỏi một chuỗi văn bản.
+    
     - $table->foreignId('user_id')->constrained()->onDelete('cascade'); constrained sẽ nhận tham số
         là tên bảng, nếu không truyền nó sẽ tự động thêm s vào cuối user loại bỏ _id.
 
@@ -90,9 +95,20 @@ Daily Laravel Course
     } 
         + tham chiếu từ bảng posts -> users, lấy ra các thuộc tính của user_id tương ứng
         + $id->getUserName->username
+    
     - $id['body'] = Str::markdown($id->body); 
         => chuyển đổi văn bản markdown thành html, ví dụ: # Tiêu để => <h1>Tiêu để</h1>
         - để hiện thị trong view {!! $title !!}
+    
     - khai báo một middleware mới
         1. php artisan make:middleware nameMiddleware.
         2. bootsrap -> app.php -> khai báo middleware mới
+
+    - khai báo policy
+        1. php artisan make:policy PostPplicy --mode=Post -> kết nối policy này vs bảng posts
+    
+    - trong policy có thể hàm để check quyền CRUD các bài post.
+        Ví dụ: 
+         @can('update', $idPost)
+         @endcan
+        => nếu điều kiện true thì có thể thực hiện hành động trong can

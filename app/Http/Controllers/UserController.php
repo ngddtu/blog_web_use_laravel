@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
     //
-
+    //hàm check điều hướng
     public function showCorrectHomepage(){
         if(auth()->check()){
             return view('client.homepage-feed');
@@ -18,6 +18,8 @@ class UserController extends Controller
             return view('client.homepage');
         }
     }
+    
+    //hàm đăng ký
     public function register(Request $request){
         $data = $request->validate([
             'username' => ['required', 'min:3', 'max:20', Rule::unique('users', 'username')],
@@ -29,6 +31,7 @@ class UserController extends Controller
         return redirect('/')->with('success', 'Thank you for creating an account');
     }
 
+    //hàm đăng nhập
     public function login(Request $request){
         $data = $request->validate([
             'loginusername' => 'required',
@@ -44,8 +47,22 @@ class UserController extends Controller
         }
     }
 
+    //hàm đăng xuất
     public function logout(){
         auth()->logout();
         return redirect('/')->with('success','You are now logged out.');
+    }
+
+    //hàm show profile-post
+    public function profile(User $idUser)  {
+        $thePosts = $idUser->getPostByIdUser()->latest()->get();
+        $postCount = $idUser->getPostByIdUser()->count();
+        $username = $idUser->username;
+        $user = $idUser->get();
+        // return $user;
+        // echo '<pre>';
+        return $idUser;
+        die();
+        return view('client.profile-posts', compact('thePosts', 'postCount', 'username'));
     }
 }

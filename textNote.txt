@@ -72,7 +72,7 @@ Daily Laravel Course
     - laravel tự nối model với bảng bằng quy ước tên 
         + Tên model (số ít, PascalCase) → tên bảng (số nhiều, snake_case).
         + nếu bảng tên guest mà muốn kết nối đến bảng client thì phải dùng: 
-            => protected $table = 'clinet';
+            => protected $table = 'client';
 
     - dòng này: return redirect('/')->with('success','You are now logged in.');
         sẽ bắt key như thế này: 

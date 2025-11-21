@@ -40,11 +40,33 @@ class PostController extends Controller
 
     //xóa bài viết
     public function delete(Post $idPost)  {
-        if(auth()->user()->cannot('delete', $idPost)){
-            return 'You cannot do that';
-        }
+        // if(auth()->user()->cannot('delete', $idPost)){
+        //     return 'You cannot do that';
+        // } 
+        //có thể dùng policy ở controller như trên hoặc dùng trong middleware.
         $idPost->delete();
         return redirect('/profile/' . auth()->user()->id)->with('success', 'Post successfully deleted.');
         
+    }
+
+    //show edit form
+    public function showEditForm(Post $post){
+        // echo'<pre>';
+        // var_dump($post->body);
+        // die();
+        return view('client.edit-post', compact('post'));
+    }
+
+    //handle update
+    public function update(Post $post, Request $request) {
+        $data = $request->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+        $data['title'] = strip_tags($data['title']);
+        $data['body'] = strip_tags($data['body']);
+
+        $post->update($data);
+        return back()->with('success','Post successfully updated');
     }
 }

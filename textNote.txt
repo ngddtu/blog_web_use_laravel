@@ -66,7 +66,7 @@ Daily Laravel Course
     
     - $table->foreignId('users_id')->constrained()->onDelete('cascade'); 
         + onDelete: nếu bản ghi trong users bị xóa thì toàn bộ bản ghi con trong bảng posts 
-            cũng bị xóa theo.
+            cũng bị xóa d
     
     - strip_tags: chức năng chính: Xóa tất cả các thẻ HTML và PHP khỏi một chuỗi văn bản.
     
@@ -112,3 +112,36 @@ Daily Laravel Course
          @can('update', $idPost)
          @endcan
         => nếu điều kiện true thì có thể thực hiện hành động trong can
+        1. Policy trong cotroller 
+            // if(auth()->user()->cannot('delete', $idPost)){
+            //     return 'You cannot do that';
+            // } 
+        2. Policy trong middleware
+            Route::delete('post/{idPost}', [PostController::class, "delete"])->middleware('can:delete,idPost');
+    - tạo thêm file migration để edit bảng
+        => php artisan make:migration name_file --table=nameTable
+
+4/11/25
+    - Khai báo gate, vào Providers phần boot 
+        => public function boot(): void
+    {
+        Gate::define('visitAdminPages', function($user){
+            return $user->isAdmin === 1;
+        });
+    }
+        => import use Illuminate\Support\Facades\Gate; trong router và Providers
+
+    cách sử dụng:
+                    Route::get('/admin-only', function(){
+                        if(Gate::allows('visitAdminPages')){
+                            return 'Only admins should be able to see this page';
+                        }
+                        return 'You can not view this page';
+                    }) ;// hoặc ->middleware('can:visitAdminPages')
+    
+21/11
+    - php artisan storage:link
+        => tạo một path ảo của storage nằm trong file public, từ đó có thể truy cập ảnh trong file storage 
+    từ Url.
+
+    - upload_max_filesize (ở trong file php.ini), set value size ảnh để valid upload size.

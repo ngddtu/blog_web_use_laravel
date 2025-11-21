@@ -3,8 +3,11 @@
         <h2>
             <img class="avatar-small" src="https://gravatar.com/avatar/b9408a09298632b5151200f3449434ef?s=128" /> 
             <form class="ml-2 d-inline" action="#" method="POST">
-                <button class="btn btn-primary btn-sm">Follow <i class="fas fa-user-plus"></i></button> {{ $username }}
+                <button class="btn btn-primary btn-sm">Follow <i class="fas fa-user-plus"></i></button> {{ $idUser->username }}
                 <!-- <button class="btn btn-danger btn-sm">Stop Following <i class="fas fa-user-times"></i></button> -->
+                @if(auth()->user()->id === $idUser->id)
+                    <a href="/manage-avatar" class="btn btn-secondary btn-sm">Manage Avatar</a>
+                @endif
             </form>
         </h2>
 

@@ -57,12 +57,21 @@ class UserController extends Controller
     public function profile(User $idUser)  {
         $thePosts = $idUser->getPostByIdUser()->latest()->get();
         $postCount = $idUser->getPostByIdUser()->count();
-        $username = $idUser->username;
-        $user = $idUser->get();
-        // return $user;
-        // echo '<pre>';
-        // return $idUser;
-        // die();
-        return view('client.profile-posts', compact('thePosts', 'postCount', 'username'));
+        
+        return view('client.profile-posts', compact('thePosts', 'postCount', 'idUser'));
+    }
+
+    //hàm show avatar 
+    public function showAvatar() {
+        return view('client.avatar-form');
+    }
+
+    //handle avatar
+    public function storeAvatar(Request $request) {
+        $request->validate([
+            'avatar' => 'required|image|max:3000'
+        ]);
+
+        $request->file('avatar')->store('user', 'public');
     }
 }
